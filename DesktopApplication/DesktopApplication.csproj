@@ -61,6 +61,7 @@
     <Reference Include="Newtonsoft.Json" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
@@ -91,6 +92,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Authority.cs" />
+    <Compile Include="ConfigAppSettings.cs" />
     <Compile Include="FileClass.cs" />
     <Compile Include="History.cs" />
     <Compile Include="MyKeys.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="PassDataWinFormEventArgs.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="PostOptions.cs" />
+    <Compile Include="StoreMessage.cs" />
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,7 +180,25 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="appIcon.png" />
+    <Resource Include="Icon\addicon.png" />
+    <Resource Include="Icon\decreaseicon.png" />
+    <Resource Include="Icon\fileIcon.png" />
+    <Resource Include="Icon\videoIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\picIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\elseIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\allfileIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\musicIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

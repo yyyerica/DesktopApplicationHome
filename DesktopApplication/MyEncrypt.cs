@@ -74,10 +74,7 @@ namespace DesktopApplication
         public static string[] GenerateKey()
         {
             string[] result = new string[2];
-            string directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string filePath = Path.Combine(directory, "publicKeyString.txt");
-            Console.WriteLine("HaHaHa");
-            if (!File.Exists(filePath))
+            if (!File.Exists(MyKeys.MYDIRECTORY + "publicKeyString.txt"))
             {
                 //生成密钥对  
                 Console.WriteLine("HaHa");
@@ -99,16 +96,16 @@ namespace DesktopApplication
                 string publicKeyString = Convert.ToBase64String(publicInfoByte);
                 string privateKeyString = Convert.ToBase64String(privateInfoByte);
 
-                File.WriteAllText("publicKeyString.txt", publicKeyString, Encoding.UTF8);
-                File.WriteAllText("privateKeyString.txt", privateKeyString, Encoding.UTF8);
+                File.WriteAllText(MyKeys.MYDIRECTORY + "publicKeyString.txt", publicKeyString, Encoding.UTF8);
+                File.WriteAllText(MyKeys.MYDIRECTORY + "privateKeyString.txt", privateKeyString, Encoding.UTF8);
 
                 result[0] = publicKeyString;
                 result[1] = privateKeyString;
             }
             else
             {
-                string publicKeyString = File.ReadAllText("publicKeyString.txt");
-                string privateKeyString = File.ReadAllText("privateKeyString.txt");
+                string publicKeyString = File.ReadAllText(MyKeys.MYDIRECTORY + "publicKeyString.txt");
+                string privateKeyString = File.ReadAllText(MyKeys.MYDIRECTORY + "privateKeyString.txt");
 
                 result[0] = publicKeyString;
                 result[1] = privateKeyString;

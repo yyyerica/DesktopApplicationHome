@@ -7,35 +7,64 @@
       d:DesignHeight="550" d:DesignWidth="825"
 	  Title="PageMain">
 
+    <Page.Resources>
+        <Style x:Key="AddButtonStyle">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Chrome" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+
     <Grid Margin="5" ShowGridLines="False">
-       
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!--搜索栏-->
-            <RowDefinition Height="*"/> <!--Main list-->
-            <RowDefinition Height="Auto"/> <!--信息显示文本-->
+            <RowDefinition Height="Auto"/>
+            <!--搜索栏-->
+            <RowDefinition Height="*"/>
+            <!--Main list-->
+            <RowDefinition Height="Auto"/>
+            <!--信息显示文本-->
         </Grid.RowDefinitions>
 
-<!--Row = 0--> 
+        <!--Row = 0-->
         <Grid Name="SearchBar" Grid.Row="0">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/> <!--加减按钮-->
-                <ColumnDefinition Width="2*"/> <!--路径显示框-->
-                <ColumnDefinition Width="*"/> <!--搜索框-->
-                <ColumnDefinition Width="Auto"/> <!--new folder按钮-->
+                <ColumnDefinition Width="Auto"/>
+                <!--加减按钮-->
+                <ColumnDefinition Width="2*"/>
+                <!--路径显示框-->
+                <ColumnDefinition Width="*"/>
+                <!--搜索框-->
+                <ColumnDefinition Width="Auto"/>
+                <!--new folder按钮-->
             </Grid.ColumnDefinitions>
 
-            
+
             <StackPanel 
                     Grid.Column="0"
-                    Orientation="Vertical" 
+                    Orientation="Horizontal" 
                     HorizontalAlignment="Left" 
                     Margin="5">
-                
+
                 <Button Name="AddButton"
-                        Content="Add"
+                        Width="30"
+                        Height="30"
                         Initialized="btnMenu_Initialized"
-                        Click="AddButton_Click">
+                        Click="AddButton_Click"
+                        BorderThickness="0"
+                        Style="{StaticResource AddButtonStyle}">
+
+                    <Button.Background>
+                        <ImageBrush ImageSource="Icon/addicon.png"/>
+                    </Button.Background>
                     <Button.ContextMenu>
                         <ContextMenu Name="contextMenu">
                             <MenuItem Header="选择文件"
@@ -47,81 +76,158 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
-            
+
+                <Button Name="DecreaseButton"
+                        Width="30"
+                        Height="30"
+                        BorderThickness="0"
+                        Style="{StaticResource AddButtonStyle}"
+                        Margin="5,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Icon/decreaseIcon.png"/>
+                    </Button.Background>
+                </Button>
             </StackPanel>
- 
+
             <Border Margin="5"  Grid.Column="1"  Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="1">
                 <TextBlock  
                     Name="textblock_filepath" 
                     HorizontalAlignment="Stretch"
-                    Text="  文件路径"/>
+                    Text="  文件路径"
+                    VerticalAlignment="Center"/>
             </Border>
             <!--MinHeight="41"
                 MinWidth="734"-->
-            
-                <!--MinHeight="41"
+
+            <!--MinHeight="41"
                     MinWidth="297"-->
 
-            <TextBox HorizontalAlignment="Stretch" Grid.Column="2" Margin="5"/>
+            <TextBox HorizontalAlignment="Stretch" 
+                     Grid.Column="2" Margin="5"
+                     Height="30"
+                     VerticalContentAlignment="Center"/>
 
             <StackPanel Grid.Column="2" Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Name="SearchButton" Content="搜索" HorizontalAlignment="Right"/>
             </StackPanel>
-            
-        
-            <Button Content="NEW FOLDER" Grid.Column="3" Margin="5"/>
+            <!--<Button Content="NEW FOLDER" Grid.Column="3" Margin="5"/>-->
         </Grid>
 
-<!--Row = 1-->    
+        <!--Row = 1-->
         <Grid Name="Mainlist" Grid.Row="1" Margin="5">
-        
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/> <!--左边目录栏-->
-                <ColumnDefinition Width="Auto"/> <!--分隔条-->
-                <ColumnDefinition Width="2*"/> <!--右边显示框-->
+                <ColumnDefinition Width="268*"/>
+                <!--左边目录栏-->
+                <ColumnDefinition Width="Auto"/>
+                <!--分隔条-->
+                <ColumnDefinition Width="537*"/>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="0*"/>
+                <!--右边显示框-->
             </Grid.ColumnDefinitions>
 
 
             <!--<ListView Name="leftList" Grid.Column="0"/>-->
-            
+
             <TreeView Name="leftList" 
-                      Grid.Column="0"
-                      >
+                      Grid.Column="0">
                 <TreeViewItem 
-                    Header="全部文件"
-                    Selected="treeview_Selected">
-                    <TreeViewItem Header="文档" />
-                    <TreeViewItem Header="图片"/>
-                    <TreeViewItem Header="视频"/>
-                    <TreeViewItem Header="音乐"/>
-                    <TreeViewItem Header="应用"/>
-                    <TreeViewItem Header="其他"/>
+                    Name="全部文件"
+                    Selected="treeview_Selected"
+                    Margin="0,10,0,0"
+                    IsExpanded="True">
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="30" Width="30" Source="Icon/allfileIcon.png" />
+                            <TextBlock Text="全部文件" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+
+                    <TreeViewItem Name="文档" Margin="0,10,0,0">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="30" Width="30"
+                                       Source="Icon/fileIcon.png" />
+                                <TextBlock Text="文档" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+
+                    <TreeViewItem Name="图片" Margin="0,10,0,0">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="30" Width="30" Source="Icon/picIcon.png"/>
+                                <TextBlock Text="图片" 
+                                           Margin="10,0,0,0" 
+                                           VerticalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+
+                    <TreeViewItem Name="视频" Margin="0,10,0,0">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="30"  Width="30"
+                                       Source="Icon/videoIcon.png" ></Image>
+                                <TextBlock Text="视频" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+
+                    <TreeViewItem Name="音频" Margin="0,10,0,0">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="30" Width="30" Source="Icon/musicIcon.png" />
+                                <TextBlock Text="音频" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+
+                    <TreeViewItem Name="应用" Margin="0,10,0,0">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="30" Width="30" Source="appIcon.png" ></Image>
+                                <TextBlock Text="应用" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+
+                    <TreeViewItem Name="其它" Margin="0,10,0,0">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="30" Source="Icon/elseIcon.png" ></Image>
+                                <TextBlock Text="其它" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
                 </TreeViewItem>
-                
             </TreeView>
 
             <!--分隔条-->
-            <GridSplitter Width="3" Grid.Column="1" VerticalAlignment="Stretch"
-                          HorizontalAlignment="Center" ShowsPreview="False"/>
+            <GridSplitter Width="3" VerticalAlignment="Stretch"
+                          HorizontalAlignment="Center" 
+                          ShowsPreview="False" 
+                          Grid.Column="1"/>
 
 
             <ListView 
                 Name="mylistview"
                 Grid.Column="2"
-                MouseLeftButtonDown="listview_Click">   
+                SelectionChanged = "listview_Selected">
                 <ListView.View>
                     <GridView x:Name="gridView">
-                        <GridViewColumn Header="文件名" Width="90" DisplayMemberBinding="{Binding Path=File_Path,Mode=OneWay}"></GridViewColumn>
-                        <!--<GridViewColumn Header="路径" Width="180" DisplayMemberBinding="{Binding Address,Mode=OneWay}"></GridViewColumn>-->
+                        <GridViewColumn Header="文件名" Width="180" DisplayMemberBinding="{Binding Path=File_Path,Mode=OneWay}"></GridViewColumn>
+                        <GridViewColumn Header="路径" Width="180" DisplayMemberBinding="{Binding Path=Address,Mode=OneWay}"></GridViewColumn>
                         <!--<GridViewColumn Header="类别" DisplayMemberBinding="{Binding Type}"> </GridViewColumn>-->
                     </GridView>
 
                 </ListView.View>
             </ListView>
-        
+
         </Grid>
 
-<!--Row = 2-->
+        <!--Row = 2-->
         <TextBlock 
             Grid.Row="2"
             HorizontalAlignment="Stretch"/>

@@ -22,7 +22,7 @@ namespace DesktopApplication
             source = Encrypt(source);
 
             var postData = "model=" + PostOptions.LOGIN;
-            postData += "&cpuId=" + UrlEncode(MyKeys.CPUID, Encoding.UTF8);
+            postData += "&guid=" + UrlEncode(MyKeys.GUID, Encoding.UTF8);
             postData += source;
 
             var data = Encoding.UTF8.GetBytes(postData);
@@ -43,21 +43,21 @@ namespace DesktopApplication
 
             string[] sourceStrArray = responseString.Split('&');
             string status = sourceStrArray[0].Split('=')[1].ToString();
-            Console.WriteLine("status:" + status);
+            //Console.WriteLine("status:" + status);
 
             if (status.Equals("OK"))
             {
                 string userId = sourceStrArray[1].Split('=')[1].ToString();
                 MyKeys.USER_ID = userId;
-                Console.WriteLine(MyKeys.USER_ID);
-                Console.WriteLine("LOGIN");
+                //Console.WriteLine(MyKeys.USER_ID);
+                //Console.WriteLine("LOGIN");
                 return true;
             }
 
             return false;
         }
 
-        public static void SendAuthority(string file_path, string authority_number)
+        public static Boolean SendAuthority(string file_path, string authority_number)
         {
             var request = (HttpWebRequest)WebRequest.Create(MyKeys.SENDURL);
 
@@ -67,7 +67,7 @@ namespace DesktopApplication
 
             var postData = "model=" + PostOptions.SENDAUTHORITY;
             postData += "&user_id=" + UrlEncode(MyKeys.USER_ID, Encoding.UTF8);
-            postData += "&cpuId=" + UrlEncode(MyKeys.CPUID, Encoding.UTF8);
+            postData += "&guid=" + UrlEncode(MyKeys.GUID, Encoding.UTF8);
             postData += source;
 
             var data = Encoding.UTF8.GetBytes(postData);
@@ -94,7 +94,10 @@ namespace DesktopApplication
             {
                 //string content = sourceStrArray[1].Split('=')[1].ToString();
                 Console.WriteLine("SEND");
+                return true;
             }
+
+            return false;
         }
 
         public static bool SendCheck(string file_path, string authority_number)
@@ -115,7 +118,7 @@ namespace DesktopApplication
 
             var postData = "model=" + PostOptions.OPERATE;
             postData += "&user_id=" + UrlEncode(MyKeys.USER_ID, Encoding.UTF8);
-            postData += "&cpuId=" + UrlEncode(MyKeys.CPUID, Encoding.UTF8);
+            postData += "&guid=" + UrlEncode(MyKeys.GUID, Encoding.UTF8);
             postData += source;
 
             var data = Encoding.UTF8.GetBytes(postData);
@@ -158,7 +161,7 @@ namespace DesktopApplication
 
             var postData = "model=" + PostOptions.GETAUTHORITYLIST;
             postData += "&user_id=" + UrlEncode(MyKeys.USER_ID, Encoding.UTF8);
-            postData += "&cpuId=" + UrlEncode(MyKeys.CPUID, Encoding.UTF8);
+            postData += "&guid=" + UrlEncode(MyKeys.GUID, Encoding.UTF8);
 
             var data = Encoding.UTF8.GetBytes(postData);
 
@@ -178,14 +181,18 @@ namespace DesktopApplication
 
             ObservableCollection<Authority> authorities = new ObservableCollection<Authority>();
             string[] sourceStrArray = responseString.Split('&');
-            for (int i = 0; i < sourceStrArray.Length; i += 2)
+            if (sourceStrArray.Length > 1)
             {
-                string file_path = sourceStrArray[i].Split('=')[1];
-                string authority_number = sourceStrArray[i + 1].Split('=')[1];
-                //Authority authority = new Authority(cpu_id, file_path);
-                Authority authority = new Authority() { File_Path = file_path, Authority_Number = authority_number };
-                authorities.Add(authority);
+                for (int i = 0; i < sourceStrArray.Length; i += 2)
+                {
+                    string file_path = sourceStrArray[i].Split('=')[1];
+                    string authority_number = sourceStrArray[i + 1].Split('=')[1];
+                    //Authority authority = new Authority(guid, file_path);
+                    Authority authority = new Authority() { File_Path = file_path, Authority_Number = authority_number };
+                    authorities.Add(authority);
+                }
             }
+            
             return authorities;
         }
 
@@ -199,7 +206,7 @@ namespace DesktopApplication
 
             var postData = "model=" + PostOptions.GETHISTORYLIST;
             postData += "&user_id=" + UrlEncode(MyKeys.USER_ID, Encoding.UTF8);
-            postData += "&cpuId=" + UrlEncode(MyKeys.CPUID, Encoding.UTF8);
+            postData += "&guid=" + UrlEncode(MyKeys.GUID, Encoding.UTF8);
             postData += source;
 
             var data = Encoding.UTF8.GetBytes(postData);
@@ -238,7 +245,7 @@ namespace DesktopApplication
 
             var postData = "model=" + PostOptions.GETALLHISTORYLIST;
             postData += "&user_id=" + UrlEncode(MyKeys.USER_ID, Encoding.UTF8);
-            postData += "&cpuId=" + UrlEncode(MyKeys.CPUID, Encoding.UTF8);
+            postData += "&guid=" + UrlEncode(MyKeys.GUID, Encoding.UTF8);
 
             var data = Encoding.UTF8.GetBytes(postData);
 
@@ -258,15 +265,18 @@ namespace DesktopApplication
 
             ObservableCollection<History> histories = new ObservableCollection<History>();
             string[] sourceStrArray = responseString.Split('&');
-            for (int i = 0; i < sourceStrArray.Length; i += 5)
+            if (sourceStrArray.Length > 1)
             {
-                string file_path = sourceStrArray[i].Split('=')[1];
-                string authority_number = sourceStrArray[i + 1].Split('=')[1];
-                string operate_date = sourceStrArray[i + 2].Split('=')[1];
-                string operate_time = sourceStrArray[i + 3].Split('=')[1];
-                string isPermit = sourceStrArray[i + 4].Split('=')[1];
-                History history = new History() { File_Path = file_path, Authority_Number = authority_number, Operate_Date = operate_date, Operate_Time = operate_time, IsPermit = isPermit };
-                histories.Add(history);
+                for (int i = 0; i < sourceStrArray.Length; i += 5)
+                {
+                    string file_path = sourceStrArray[i].Split('=')[1];
+                    string authority_number = sourceStrArray[i + 1].Split('=')[1];
+                    string operate_date = sourceStrArray[i + 2].Split('=')[1];
+                    string operate_time = sourceStrArray[i + 3].Split('=')[1];
+                    string isPermit = sourceStrArray[i + 4].Split('=')[1];
+                    History history = new History() { File_Path = file_path, Authority_Number = authority_number, Operate_Date = operate_date, Operate_Time = operate_time, IsPermit = isPermit };
+                    histories.Add(history);
+                }
             }
             return histories;
         }

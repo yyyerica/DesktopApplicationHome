@@ -44,8 +44,6 @@ namespace DesktopApplication
     public partial class PageMain : Page
     {
         public static ObservableCollection<Authority> thelist;
-        
-        public static List<String> theleftlist = new List<string>{"全部文件","文档","图片","视频","音乐","应用","文件夹","其他"};
 
         IEnumerable<Authority> SelectedFilelist;
        
@@ -55,7 +53,6 @@ namespace DesktopApplication
             InitializeComponent();
             thelist = new ObservableCollection<Authority> {};
             this.mylistview.ItemsSource = thelist;
-  
 
             //leftList.ItemsSource = theleftlist;
             //leftList.SelectedItem
@@ -68,7 +65,6 @@ namespace DesktopApplication
                     thelist.Add(item);
                 }
             }
-
         }
 
         public ObservableCollection<Authority> getFileName(ObservableCollection<Authority> list)
@@ -158,20 +154,14 @@ namespace DesktopApplication
             //this.contextMenu.Placement = PlacementMode.Top;
             //显示菜单
             this.contextMenu.IsOpen = true;
-        }
 
-        private void listview_Click(object sender, MouseButtonEventArgs e)
-        {
-            var authority = this.mylistview.SelectedItem as Authority;
-            if(authority!=null)
-                this.textblock_filepath.Text = authority.File_Path;
+            //this.textblock_filepath.Text = MyKeys.FILE_PATH;
         }
-
   
         private void treeview_Selected(object sender, RoutedEventArgs e)
         {
             TreeViewItem a = e.OriginalSource as TreeViewItem;
-            switch(a.Header.ToString())
+            switch(a.Name.ToString())
             {
                 case "全部文件":
                     this.mylistview.ItemsSource = thelist;
@@ -208,7 +198,7 @@ namespace DesktopApplication
                     this.mylistview.ItemsSource = SelectedFilelist;
                     break;
 
-                case "音乐":
+                case "音频":
                     SelectedFilelist =
                         from authority in thelist
                         where authority.File_Path.Split('.').Last().Equals("mp3")
@@ -243,30 +233,14 @@ namespace DesktopApplication
                     this.mylistview.ItemsSource = SelectedFilelist;
                     break;
             }
+        }     
+       
+        private void listview_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            var authority = this.mylistview.SelectedItem as Authority;
+            if (authority != null)
+                this.textblock_filepath.Text = authority.File_Path;
         }
 
-        /**
-        //选择文件pic
-        private void SelectPicButton_Click(object sender, RoutedEventArgs e)
-        {
-            string filetype = "图片文件(*.jpg,*.png)|*.jpg;*.png";
-            string imgpath = OpenFileDialog(filetype);
-            if (!string.IsNullOrEmpty(imgpath))
-            {
-                this.textblock_filename.Text = imgpath;
-            }
-        }
-
-        public string OpenFileDialog(string _filetype)
-        {
-            Microsoft.Win32.OpenFileDialog op = new Microsoft.Win32.OpenFileDialog();
-            //op.InitialDirectory = _dir;你可以指定文件夹
-            op.RestoreDirectory = true;
-            op.Filter = _filetype;
-            op.ShowDialog();
-            return op.FileName;
-        }
-        */
-    
     }
 }

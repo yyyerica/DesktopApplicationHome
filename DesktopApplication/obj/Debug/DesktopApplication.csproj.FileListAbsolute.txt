@@ -24,3 +24,58 @@ F:\Codes\wpf\DesktopApplication\DesktopApplication\bin\Debug\System.Windows.Cont
 F:\Codes\wpf\DesktopApplication\DesktopApplication\obj\Debug\LoginWindow.baml
 F:\Codes\wpf\DesktopApplication\DesktopApplication\obj\Debug\LoginWindow.g.cs
 F:\Codes\wpf\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csprojResolveAssemblyReference.cache
+F:\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.exe.config
+F:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.exe
+F:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.pdb
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.exe.config
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.exe
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.pdb
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.exe
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.pdb
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.dll
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.SqlServer.dll
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\Newtonsoft.Json.dll
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.xml
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.SqlServer.xml
+E:\c# project\DesktopApplication\DesktopApplication\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.xml
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csprojResolveAssemblyReference.cache
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\LoginWindow.baml
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\MainWindow.baml
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\PageHistory.baml
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\PageMain.baml
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\LoginWindow.g.cs
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\MainWindow.g.cs
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\PageHistory.g.cs
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\PageMain.g.cs
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\App.g.cs
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication_MarkupCompile.cache
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.g.resources
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.Properties.Resources.resources
+E:\c# project\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csproj.GenerateResource.Cache
+G:\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.exe.config
+G:\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.exe
+G:\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.pdb
+G:\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.dll
+G:\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.SqlServer.dll
+G:\DesktopApplication\DesktopApplication\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+G:\DesktopApplication\DesktopApplication\bin\Debug\WPFVisifire.Charts.dll
+G:\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.xml
+G:\DesktopApplication\DesktopApplication\bin\Debug\EntityFramework.SqlServer.xml
+G:\DesktopApplication\DesktopApplication\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.xml
+G:\DesktopApplication\DesktopApplication\obj\Debug\LoginWindow.baml
+G:\DesktopApplication\DesktopApplication\obj\Debug\MainWindow.baml
+G:\DesktopApplication\DesktopApplication\obj\Debug\PageHistory.baml
+G:\DesktopApplication\DesktopApplication\obj\Debug\PageMain.baml
+G:\DesktopApplication\DesktopApplication\obj\Debug\LoginWindow.g.cs
+G:\DesktopApplication\DesktopApplication\obj\Debug\MainWindow.g.cs
+G:\DesktopApplication\DesktopApplication\obj\Debug\PageHistory.g.cs
+G:\DesktopApplication\DesktopApplication\obj\Debug\PageMain.g.cs
+G:\DesktopApplication\DesktopApplication\obj\Debug\App.g.cs
+G:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication_MarkupCompile.cache
+G:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.g.resources
+G:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.Properties.Resources.resources
+G:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csproj.GenerateResource.Cache
+G:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.exe
+G:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.pdb
+G:\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csprojResolveAssemblyReference.cache

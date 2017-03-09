@@ -26,12 +26,24 @@ namespace DesktopApplication.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string StoreDatabase {
+        public string USERID {
             get {
-                return ((string)(this["StoreDatabase"]));
+                return ((string)(this["USERID"]));
             }
             set {
-                this["StoreDatabase"] = value;
+                this["USERID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string key {
+            get {
+                return ((string)(this["key"]));
+            }
+            set {
+                this["key"] = value;
             }
         }
     }
