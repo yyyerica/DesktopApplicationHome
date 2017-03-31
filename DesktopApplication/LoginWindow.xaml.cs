@@ -36,7 +36,7 @@ namespace DesktopApplication
         {
             String Account,Key;
             Account = AccountTextBox.Text;
-            Key = KeyTextBox.Text;
+            Key = KeyTextBox.Password;
 
             if(Post.HttpLogin(Account, Key))
             {
@@ -46,6 +46,22 @@ namespace DesktopApplication
             }
 
             
+        }
+
+        private void AccountTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                KeyTextBox.Focus();
+            }
+        }
+
+        private void KeyTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SiginButton.Focus();
+            }
         }
     }
 }

@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="825"
+      d:DesignHeight="650" d:DesignWidth="1025"
 	  Title="PageMain">
 
     <Page.Resources>
@@ -13,16 +13,187 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="Chrome" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
+        <Style x:Key="TreeViewStyle" TargetType="{x:Type TreeView}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="FontFamily" Value="Bold"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TreeView}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ScrollViewer x:Name="_tv_scrollviewer_" 
+                                          Background="{TemplateBinding Background}" 
+                                          CanContentScroll="false" Focusable="false" 
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" 
+                                          Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd" 
+                                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="true">
+                                <Setter Property="CanContentScroll" TargetName="_tv_scrollviewer_" Value="true"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="true">
+                    <Setter Property="ItemsPanel">
+                        <Setter.Value>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+
+        <!--间隔条-->
+        <ControlTemplate x:Key="tmpForThumb" TargetType="{x:Type Thumb}">
+            <Border>
+                <Rectangle Width="1" Name="rec">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0.5,0.3" EndPoint="1,1">
+                            <GradientStop Color="White" Offset="0.22"/>
+                            <!--<GradientStop Color="Gray" Offset="1"/>-->
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="rec" Property="Fill" Value="Gray"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!--GridViewColumn主体-->
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontFamily" Value="微软雅黑"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Grid Name="g">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="LightGray" Offset="0.3"/>
+                                    <GradientStop Color="LightGray" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <Border Name="bd" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter Margin="5,4,1,3"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+                            <Thumb Name="PART_HeaderGripper" Template="{StaticResource tmpForThumb}" HorizontalAlignment="Right" Margin="0,0,-1,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="g" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="White" Offset="0.3"/>
+                                            <GradientStop Color="LightGray" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--数据源-->
+        <!--<c:Students x:Key="DBSource"/>-->
+        <!--ListViewItem的样式-->
+        <!--<Style TargetType="{x:Type ListViewItem}">
+            <Style.Setters>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="bd"  
+                                BorderThickness="1"  
+                                Padding="{TemplateBinding Padding}"  
+                                SnapsToDevicePixels="True">
+                                <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+                                                  Margin="3"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="bd" Property="Background">
+                                            <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0.5,0.22" EndPoint="0.5,1">
+                                                    <GradientStop Color="LightGray" Offset="0.31"/>
+                                                    <GradientStop Color="Gray" Offset="0.88"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>-->
+
+        <Style TargetType="{x:Type ListViewItem}">
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
+                        <Condition Property="IsSelected" Value="False" />
+                        <Condition Property="IsMouseOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="LightGray" />
+                </MultiTrigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="ItemsControl.AlternationIndex" Value="0" />
+                        <Condition Property="IsSelected" Value="False" />
+                        <Condition Property="IsMouseOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="White" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
     </Page.Resources>
 
-    <Grid Margin="5" ShowGridLines="False">
+    <Grid ShowGridLines="False">
+        <Grid.Background>
+            <ImageBrush ImageSource="Icon/background.jpg"/>
+        </Grid.Background>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -34,7 +205,7 @@
         </Grid.RowDefinitions>
 
         <!--Row = 0-->
-        <Grid Name="SearchBar" Grid.Row="0">
+        <Grid Name="SearchBar" Grid.Row="0" Margin="0,0,0,10" Background="#FF9D9D9D">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -43,8 +214,6 @@
                 <!--路径显示框-->
                 <ColumnDefinition Width="*"/>
                 <!--搜索框-->
-                <ColumnDefinition Width="Auto"/>
-                <!--new folder按钮-->
             </Grid.ColumnDefinitions>
 
 
@@ -52,7 +221,7 @@
                     Grid.Column="0"
                     Orientation="Horizontal" 
                     HorizontalAlignment="Left" 
-                    Margin="5">
+                    Margin="20,5,10,5">
 
                 <Button Name="AddButton"
                         Width="30"
@@ -89,41 +258,65 @@
                 </Button>
             </StackPanel>
 
-            <Border Margin="5"  Grid.Column="1"  Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="1">
-                <TextBlock  
-                    Name="textblock_filepath" 
-                    HorizontalAlignment="Stretch"
-                    Text="  文件路径"
-                    VerticalAlignment="Center"/>
+            <!--<Border Grid.Column="1" 
+                    Background="White" BorderBrush="Gray" 
+                    BorderThickness="2" CornerRadius="12"
+                    Margin="5,7,10,7">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <Image Source="Icon/homeapi.png" 
+                           Width="20" Height="20" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"/>
+                    <TextBlock  
+                        Name="textblock_filepath" 
+                        HorizontalAlignment="Stretch"
+                        Text="文件路径"
+                        VerticalAlignment="Center"
+                        Margin="5,0,0,0"
+                        />
+                </StackPanel>
+
+            </Border>-->
+
+            <Border Margin="0,5,10,5" Grid.Column="2"  Background="White" BorderBrush="Gray" BorderThickness="2" CornerRadius="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox HorizontalAlignment="Left" 
+                     Margin="5,5,0,5"
+                     Height="20"
+                     Width="Auto"
+                     MinWidth="370"
+                     VerticalContentAlignment="Center" 
+                     BorderThickness="0"
+                     Grid.Column="0"/>
+
+                    <StackPanel Grid.Column="1" Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Name="SearchButton"  HorizontalAlignment="Right" VerticalAlignment="Center" Width="20" Height="20" BorderThickness="0" Margin="0,0,5,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Icon/search.png"/>
+                            </Button.Background>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
             </Border>
-            <!--MinHeight="41"
-                MinWidth="734"-->
-
-            <!--MinHeight="41"
-                    MinWidth="297"-->
-
-            <TextBox HorizontalAlignment="Stretch" 
-                     Grid.Column="2" Margin="5"
-                     Height="30"
-                     VerticalContentAlignment="Center"/>
-
-            <StackPanel Grid.Column="2" Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Name="SearchButton" Content="搜索" HorizontalAlignment="Right"/>
-            </StackPanel>
             <!--<Button Content="NEW FOLDER" Grid.Column="3" Margin="5"/>-->
         </Grid>
 
         <!--Row = 1-->
-        <Grid Name="Mainlist" Grid.Row="1" Margin="5">
+        <Grid Name="Mainlist" Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="268*"/>
+                <ColumnDefinition Width="*"/>
                 <!--左边目录栏-->
                 <ColumnDefinition Width="Auto"/>
                 <!--分隔条-->
-                <ColumnDefinition Width="537*"/>
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="4*"/>
                 <!--右边显示框-->
             </Grid.ColumnDefinitions>
 
@@ -131,16 +324,34 @@
             <!--<ListView Name="leftList" Grid.Column="0"/>-->
 
             <TreeView Name="leftList" 
-                      Grid.Column="0">
+                      Grid.Column="0"
+                      BorderThickness="1"
+                      Margin="10,0,0,0"
+                      BorderBrush="White" Background="{x:Null}">
+                <TreeView.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                      Color="Transparent" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                      Color="Green" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                      Color="Transparent" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                      Color="Black" />
+                </TreeView.Resources>
+                <TreeView.Effect>
+                    <DropShadowEffect Color="Gray" Direction="0" ShadowDepth="5" Opacity="0.5" />
+                </TreeView.Effect>
+                <!--Style="{StaticResource TreeViewStyle}"-->
                 <TreeViewItem 
-                    Name="全部文件"
+                    Name="allfilesItem"
                     Selected="treeview_Selected"
                     Margin="0,10,0,0"
                     IsExpanded="True">
+                    <!---->
                     <TreeViewItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Height="30" Width="30" Source="Icon/allfileIcon.png" />
-                            <TextBlock Text="全部文件" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Name="allfilesText" Text="全部文件" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                     </TreeViewItem.Header>
 
@@ -205,31 +416,51 @@
             </TreeView>
 
             <!--分隔条-->
-            <GridSplitter Width="3" VerticalAlignment="Stretch"
+                    <GridSplitter Width="2" VerticalAlignment="Stretch"
                           HorizontalAlignment="Center" 
                           ShowsPreview="False" 
-                          Grid.Column="1"/>
+                          Grid.Column="1"
+                          Margin="5" Background="#FFA0A0A0"/>
 
 
-            <ListView 
-                Name="mylistview"
-                Grid.Column="2"
-                SelectionChanged = "listview_Selected">
-                <ListView.View>
-                    <GridView x:Name="gridView">
-                        <GridViewColumn Header="文件名" Width="180" DisplayMemberBinding="{Binding Path=File_Path,Mode=OneWay}"></GridViewColumn>
-                        <GridViewColumn Header="路径" Width="180" DisplayMemberBinding="{Binding Path=Address,Mode=OneWay}"></GridViewColumn>
-                        <!--<GridViewColumn Header="类别" DisplayMemberBinding="{Binding Type}"> </GridViewColumn>-->
-                    </GridView>
+                    <ListView 
+                        Name="mylistview"
+                        Grid.Column="3"
+                        SelectionChanged = "listview_Selected"
+                        BorderThickness="1"
+                        BorderBrush="White"
+                        Margin="0,0,10,0"
+                        AlternationCount="2" Background="{x:Null}" >
 
-                </ListView.View>
-            </ListView>
+                        <ListView.Effect>
+                            <DropShadowEffect Color="Black" Direction="0" ShadowDepth="3" Opacity="0.5" />
+                        </ListView.Effect>
+                        <ListView.View>
+                            <GridView x:Name="gridView">
+                                <GridViewColumn Header="文件名" Width="180"
+                                                DisplayMemberBinding="{Binding Path=File_Path,Mode=OneWay}"></GridViewColumn>
+                                <GridViewColumn Header="路径" Width="380" DisplayMemberBinding="{Binding Path=Address,Mode=OneWay}"></GridViewColumn>
+                                <!--<GridViewColumn Header="类别" DisplayMemberBinding="{Binding Type}"> </GridViewColumn>-->
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
 
         </Grid>
 
         <!--Row = 2-->
-        <TextBlock 
-            Grid.Row="2"
-            HorizontalAlignment="Stretch"/>
+
+
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+            BorderBrush="LightGray" BorderThickness="1" Grid.Row="2">
+            <!--CornerRadius="1"-->
+            <TextBlock 
+                Name="countText"
+                VerticalAlignment="Center"
+                Padding="20,5,20,5"
+                Foreground="Gray"
+                FontWeight ="Medium"
+                />
+        </Border>
     </Grid>
 </Page>

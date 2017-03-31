@@ -38,6 +38,8 @@ namespace DesktopApplication
         static ObservableCollection<int> value1;//相应日期的操作次数
         static ObservableCollection<KeyValuePair<String, int>> chartCollection;
 
+   
+
         public PageHistory()
         {
             InitializeComponent();
@@ -52,12 +54,24 @@ namespace DesktopApplication
             if (MainWindow.isSigined)
             {
                 ObservableCollection<History> historylist = Post.GetAllHistoryList();
-                
+
                 foreach (History item in historylist)
                 {
                     PageHistory.theWholehistorylist.Add(item);
                 }
             }
+
+            //if (MainWindow.isSigined)
+            //{
+            //    //ObservableCollection<History> historylist = Post.GetAllHistoryList();
+            //     History item = new History() { File_Path = "ddd1", Operate_Date = "2014-03-03" };
+            //     History item2 = new History() { File_Path = "ddd2", Operate_Date = "2014-03-04" };
+            //     History item3 = new History() { File_Path = "ddd3", Operate_Date = "2014-03-05" };
+            //        theWholehistorylist.Add(item);
+            //        theWholehistorylist.Add(item2);
+            //        theWholehistorylist.Add(item3);
+
+            //}
 
             refreshchart();
             CreateChart();
@@ -65,7 +79,7 @@ namespace DesktopApplication
             //chart.MouseLeftButtonUp += new MouseButtonEventHandler(chart_MouseLeftButtonUp);
         }
 
-        public void refreshchart()
+        public void refreshchart() //将相应日期和次数存入chartCollection，然后再分别存入updateTime和value1
         {
 
             if (theWholehistorylist != null & theWholehistorylist.Count > 0)
@@ -102,13 +116,32 @@ namespace DesktopApplication
 
         private void CreateChart()
         {
-            
+
+            ColorSet cs = new ColorSet();
+            cs.Id = "colorset1"; // 设置ColorSet 的 Id 为 colorset1
+            cs.Brushes.Add(new SolidColorBrush(Colors.Green));
+            cs.Brushes.Add(new SolidColorBrush(Colors.Red));
+            cs.Brushes.Add(new SolidColorBrush(Colors.Pink));
+            cs.Brushes.Add(new SolidColorBrush(Colors.Yellow));
+            cs.Brushes.Add(new SolidColorBrush(Colors.Orange));
+
+            chart.ColorSets.Add(cs);
+            chart.ColorSet = "colorset1";  // 设置 Chart 使用自定义的颜色集合 colorset1
+
+            chart.BorderThickness = new Thickness(0, 0, 0, 0);
             // Set chart properties
-            chart.Theme = "Theme2";
+            chart.Theme = "Theme1";
+
+            chart.Background = new SolidColorBrush(Colors.LightGray);
+
+            chart.LightingEnabled = true;
+            chart.ToolBarEnabled = true;
+            //chart.View3D = true;
+            chart.AnimationEnabled = true;
 
             // Set chart width and height
-            chart.Width = 720;
-            chart.Height = 200;
+            chart.Width = 1000;
+            chart.Height = 300;
 
             //Create a new Title element
             Title title = new Title();
@@ -122,9 +155,11 @@ namespace DesktopApplication
             Axis axisY = new Axis();
             // Set properties of Axis
             axisX.Title = "日期";
+           
             axisY.Title = "文件访问次数";
             axisX.IntervalType = IntervalTypes.Days;//图表的X轴坐标按什么来分类，如时分秒
-            axisX.Interval = 1; //图表中的X轴坐标间隔如2，3，20等，单位为xAxis.IntervalType设置的时分秒。
+            //axisX.Interval = 1; //图表中的X轴坐标间隔如2，3，20等，单位为xAxis.IntervalType设置的时分秒。
+            axisY.Interval = 1;
             axisX.ValueFormatString = "yyyy/MMM/d";//横坐标格式
             //设置图标中Y轴的最小值永远为0
             axisY.AxisMinimum = 0;
@@ -137,15 +172,17 @@ namespace DesktopApplication
             // Create new DataSeries 创建一个新的数据线。
             DataSeries dataSeries = new DataSeries();         
             dataSeries.ShadowEnabled = true;
-            dataSeries.LineThickness = 1;            
+            dataSeries.LineThickness = 2;            
             //设置为线
             dataSeries.RenderAs = RenderAs.Line;
             dataSeries.Opacity = 0.5;
             dataSeries.Bevel = false;
+            //dataSeries.Color = new SolidColorBrush(Colors.LightGreen);
             // Set property of DataSeries
-            dataSeries.XValueType = ChartValueTypes.DateTime;
+            //dataSeries.XValueType = ChartValueTypes.DateTime;
+//            dataSeries.AxisXType = DateTime;
             //dataSeries.XValueFormatString = "yyyy/MMM/d";//点开格式
-
+           
             // 设置数据点
             DataPoint dataPoint;
             for (int i = 0; i < updateTime.Count; i++)
@@ -154,15 +191,17 @@ namespace DesktopApplication
                 dataPoint = new DataPoint();
 
                 // 设置X轴点
-                dataPoint.XValue = updateTime[i];
+                //dataPoint.XValue = updateTime[i];
+                dataPoint.AxisXLabel = updateTime[i];
 
                 //设置Y轴点
                 dataPoint.YValue = value1[i];
-                dataPoint.MarkerSize = 8;
+                dataPoint.MarkerSize = 18;
                 //dataPoint.Tag = tableName.Split('(')[0];
 
                 //设置数据点颜色
-                // dataPoint.Color = new SolidColorBrush(Colors.LightGray);
+                //dataPoint.Color = new SolidColorBrush(Color.FromArgb((byte)new Random().Next(1, 255), (byte)new Random().Next(1, 255), (byte)new Random().Next(1, 255), 1));
+                dataPoint.Color = cs.Brushes[i];
                 dataPoint.MouseLeftButtonDown += new MouseButtonEventHandler(dataPoint_MouseLeftButtonDown);
 
                 //添加数据点
@@ -185,8 +224,8 @@ namespace DesktopApplication
         void dataPoint_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DataPoint dp = sender as DataPoint;
-            string datetime = (string)dp.XValue;
-
+            //string datetime = (string)dp.XValue;
+            string datetime = (string)dp.AxisXLabel;
             datehistorylist.Clear();
             foreach(History item in Post.GetHistoryList(datetime))
             {

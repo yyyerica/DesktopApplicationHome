@@ -17,6 +17,6 @@ namespace DesktopApplication
         public static string USER_NAME = "";
         public static string PASSWORD = "";
         public static string GUID = "";
-        public const string SENDURL = "http://121.250.223.49:8080/LoginServlet";
+        public const string SENDURL = "http://121.250.223.56:8080/LoginServlet";
     }
 }

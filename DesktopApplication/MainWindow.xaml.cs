@@ -48,6 +48,7 @@ namespace DesktopApplication
             MyKeys.MYDIRECTORY = AppDomain.CurrentDomain.BaseDirectory;
             InitializeComponent();
             init();
+            
         }
 
         public MainWindow(string arg)
@@ -55,6 +56,7 @@ namespace DesktopApplication
             MyKeys.MYDIRECTORY = AppDomain.CurrentDomain.BaseDirectory;
             InitializeComponent();
             init();
+            HomeButton.Focus();
             MyKeys.FILE_PATH = arg;
 
             if (MessageBox.Show("确定要添加该项管理吗？",
@@ -99,7 +101,7 @@ namespace DesktopApplication
             MyKeys.CLIENT_PUBLIC_KEY = key[0];
             MyKeys.CLIENT_PRIVATE_KEY = key[1];
             MyKeys.SERVER_PUBLIC_KEY = getServerKey();
-            while (!File.Exists(MyKeys.MYDIRECTORY + "serverPublicKeyString.txt")) ;
+            while (!File.Exists(MyKeys.MYDIRECTORY + "serverPublicKeyString.txt"));
         }
         
         public static string getServerKey()
@@ -189,10 +191,12 @@ namespace DesktopApplication
         private void NewButton_Click(object sender, RoutedEventArgs e)
         {
             this.myFrame.Source = new Uri("/PageMain.xaml", UriKind.Relative);
+            
         }
 
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
+            HomeButton.Focus();
             //目标
             this.contextMenu.PlacementTarget = this.SettingButton;
             //位置
@@ -213,7 +217,7 @@ namespace DesktopApplication
             {
                 LoginWindow win = new LoginWindow();
                 win.PassDataBetweenForm += new LoginWindow.PassDataBetweenFormHandler(Child_PassDataBetweenForm);
-                win.Show();
+                win.ShowDialog();
                 win.Activate();
             } else if (isSigined)
             {
@@ -270,6 +274,68 @@ namespace DesktopApplication
         }
         
        
-        
+         /// <summary>
+        /// 窗口移动事件
+        /// </summary>
+        private void TitleBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
+        int i = 0;
+        /// <summary>
+        /// 标题栏双击事件
+        /// </summary>
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            i += 1;
+            System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 300);
+            timer.Tick += (s, e1) => { timer.IsEnabled = false; i = 0; };
+            timer.IsEnabled = true;
+
+            if (i % 2 == 0)
+            {
+                timer.IsEnabled = false;
+                i = 0;
+                this.WindowState = this.WindowState == WindowState.Maximized ?
+                              WindowState.Normal : WindowState.Maximized;
+            }
+        }
+
+        /// <summary>
+        /// 窗口最小化
+        /// </summary>
+        private void btn_min_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized; //设置窗口最小化
+        }
+
+        /// <summary>
+        /// 窗口最大化与还原
+        /// </summary>
+        private void btn_max_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal; //设置窗口还原
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized; //设置窗口最大化
+            }
+        }
+
+        /// <summary>
+        /// 窗口关闭
+        /// </summary>
+        private void btn_close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

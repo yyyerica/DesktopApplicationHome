@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icon/musicicon.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icon/1118a749725561.58bd6ba8c4795.jpg")]
 
 

@@ -308,7 +308,7 @@ namespace DesktopApplication
             string character = MyEncrypt.EncryptRSA(X, MyKeys.CLIENT_PRIVATE_KEY, 2);
             string C = "{\"source\":\"" + source
                         + "\",\"character\":\"" + character + "\"}";
-            string Q = "12345678";
+            string Q = generateString(8);
             string D = MyEncrypt.EncryptDES(C, Q);
             string P = MyEncrypt.EncryptRSA(Q, MyKeys.SERVER_PUBLIC_KEY, 1);
             result = "&text=" + UrlEncode(D, Encoding.UTF8)
@@ -341,5 +341,18 @@ namespace DesktopApplication
             if (X.Equals(character.ToUpper())) return source;
             else return "";
         }
+
+        public static string generateString(int length)
+        {
+            const string allChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            StringBuilder sb = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(allChar.ToCharArray()[random.Next(allChar.Length)]);
+            }
+            return sb.ToString();
+        }
+
     }
 }

@@ -9,11 +9,68 @@
       d:DesignHeight="550" d:DesignWidth="825"
 	  Title="PageHistory">
     
+    <Page.Resources>
+        <!--间隔条-->
+        <ControlTemplate x:Key="tmpForThumb" TargetType="{x:Type Thumb}">
+            <Border>
+                <Rectangle Width="1" Name="rec">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0.5,0.3" EndPoint="1,1">
+                            <GradientStop Color="LightGray" Offset="0.22"/>
+                            <!--<GradientStop Color="Gray" Offset="1"/>-->
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="rec" Property="Fill" Value="LightGreen"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <!--GridViewColumn主体-->
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Grid Name="g">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="White" Offset="0.3"/>
+                                    <GradientStop Color="LightCyan" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <Border Name="bd" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter Margin="5,4,1,3"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+                            <Thumb Name="PART_HeaderGripper" Template="{StaticResource tmpForThumb}" HorizontalAlignment="Right" Margin="0,0,-1,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="g" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="Green" Offset="0.3"/>
+                                            <GradientStop Color="White" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Page.Resources>
+    
     <Grid Margin="5" ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <Grid Name="LayoutRoot" Grid.Row="0" HorizontalAlignment="Stretch"/>
@@ -26,12 +83,12 @@
 
         <!--<StackPanel Orientation="Vertical" Grid.Row="2" VerticalAlignment="Stretch">
             <TextBlock Name="TimeTextBlock"/>-->
-            <ListView Name="mylist" Margin="5" Grid.Row="2">
+            <ListView Name="mylist" Grid.Row="2" BorderThickness="0">
                 <ListView.View>
                     <GridView x:Name="gridView">
                     <GridViewColumn Header="文件名" Width="90" DisplayMemberBinding="{Binding Path = File_Path,Mode=OneWay}"></GridViewColumn>
                     <GridViewColumn Header="时间" Width="90" DisplayMemberBinding="{Binding Path = Operate_Time,Mode=OneWay}"></GridViewColumn>
-                    <GridViewColumn Header="路径" Width="180" DisplayMemberBinding="{Binding Path = File_Path,Mode=OneWay}"></GridViewColumn>
+                    <GridViewColumn Header="路径" Width="880" DisplayMemberBinding="{Binding Path = File_Path,Mode=OneWay}"></GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
